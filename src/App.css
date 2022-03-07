@@ -1,5 +1,55 @@
+body {
+  background: url(https://www.st-anselms.harrow.sch.uk/_site/data/files/images/news%20and%20events/F5422EA449F36CD4455ECA3529F850C3.jpg)
+    no-repeat center center fixed;
+  
+  -webkit-background-size: auto;
+  -moz-background-size: auto;
+  -o-background-size: auto;
+   background-size: auto;
+}
+
 .App {
   text-align: center;
+}
+
+.header{
+
+  height: 50px;
+  width: 100%;
+  background-color: rgb(180, 230, 176);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.main{
+  background-color: rgb(20, 74, 175);
+  text-align: center;
+  height: 700px;
+  width: 75%;
+
+   margin-left: 12.5%;
+
+  position: relative;
+  color: #faf2f2;
+  box-shadow: 0 0 30px rgb(0, 209, 52);
+  display: grid;
+  filter: opacity(0.8);
+
+  border-radius: 20px;
+}
+.nav{
+  height: 50px;
+  width: 100%;
+  background-color: powderblue;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+
+}
+
+.footer{
+  height: 50px;
+  width: 100%;
+  background-color: powderblue;
 }
 
 
