@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { fetchArticles } from '../utils/api';
 import { Link } from 'react-router-dom';
 import Loader from './Loader';
+import ErrorComp from './ErrorComp';
 
 const Home = () => {
 
     const [articles, setArticles] = useState([]);
     const [isLoading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     const urlString = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6fIN36i6PHWoGOdaalRtIXnbTbPdkYe2FtzvgV-cYvZDEZDn8M1qL56S3hcrmSdFaNw&usqp=CAU";
 
@@ -15,11 +17,17 @@ const Home = () => {
 
             setArticles(articles);
             setLoading(false);
+        }).catch((err) => {
+
+            setError({ err });
+            setLoading(false);
         })
 
     }, []);
 
     if (isLoading) return (<Loader> </Loader>);
+
+    if (error) { return <ErrorComp message={error} />; }
 
     return (
         <div>

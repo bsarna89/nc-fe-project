@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Loader from './Loader';
-import { Link } from 'react-router-dom';
+import ErrorComp from './ErrorComp';
 import { fetchArticleById } from '../utils/api';
 
 const SingleArticle = () => {
@@ -11,11 +11,16 @@ const SingleArticle = () => {
 
     const [article, setArticleById] = useState([]);
     const [isLoading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         fetchArticleById(article_id).then(({ article }) => {
             console.log(article);
             setArticleById(article);
+            setLoading(false);
+        }).catch((err) => {
+
+            setError({ err });
             setLoading(false);
         })
 
@@ -24,6 +29,9 @@ const SingleArticle = () => {
 
 
     if (isLoading) return (<Loader> </Loader>);
+
+
+    if (error) { return <ErrorComp message={error} />; }
 
     return (
         <ul className='article'>
