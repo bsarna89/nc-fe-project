@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { userContext } from "./context/Context";
 import { BrowserRouter } from "react-router-dom";
 
@@ -11,9 +11,7 @@ import Nav from './components/Nav';
 
 function App() {
 
-
   const [loggedInUser, setLoggedInUser] = useState();
-
 
   return (
 
