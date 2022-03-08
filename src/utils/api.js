@@ -6,6 +6,6 @@ export function fetchArticles() {
         .get("https://nc-news-b.herokuapp.com/api/articles")
         .then((response) => {
 
-            return response;
+            return response.data;
         });
 }
