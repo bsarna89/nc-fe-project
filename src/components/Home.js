@@ -28,7 +28,6 @@ const Home = () => {
                     return (
                         <li key={article.article_id} className='title' >
                             <p> {article.title}</p>
-                            <p> Topic :{article.topic}</p>
                             <Link to="/articles/id" className='link'>
                                 <img src={urlString} className='go-img' alt="Read Article"></img>
                             </Link>
