@@ -30,3 +30,14 @@ export function fetchArticlesByTopic(params) {
             return response.data;
         });
 }
+
+export function fetchArticleById(id) {
+
+    console.log(id, "fetch");
+    return axios
+        .get(`https://nc-news-b.herokuapp.com/api/articles/${id}`)
+        .then((response) => {
+
+            return response.data;
+        });
+}
