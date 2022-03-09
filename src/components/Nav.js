@@ -1,14 +1,18 @@
-import React from 'react';
-import { useContext } from "react";
+import React, { useEffect } from 'react';
+import { useContext, useState } from "react";
 import { Link } from 'react-router-dom';
 import { userContext } from '../context/Context';
 
 const Nav = () => {
 
-    const user = useContext(userContext);
+    const { loggedInUser } = useContext(userContext);
+    const [userDispaly, setUserDisplay] = useState("Log In");
 
-
-
+    useEffect(() => {
+        if (loggedInUser.username) {
+            setUserDisplay(loggedInUser.username);
+        }
+    }, [userDispaly, loggedInUser.username]);
 
     return (
         <div >
@@ -17,7 +21,7 @@ const Nav = () => {
                 <Link to="/">Home</Link>
                 <Link to="/topics/">Topics</Link>
                 <Link to="/articles/sort/:sortedby">Sort articles</Link>
-                <Link to="/logUser"> LogStatus</Link>
+                <Link to="/logUser"> {userDispaly} </Link>
             </nav>
 
         </div>
