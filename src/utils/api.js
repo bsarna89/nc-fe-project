@@ -33,9 +33,21 @@ export function fetchArticlesByTopic(params) {
 
 export function fetchArticleById(id) {
 
-    console.log(id, "fetch");
+
     return axios
         .get(`https://nc-news-b.herokuapp.com/api/articles/${id}`)
+        .then((response) => {
+
+            return response.data;
+        });
+}
+
+export function fetchSortedArticlesByParams(params) {
+
+    //`https://nc-news-b.herokuapp.com/api/articles/?sortby=${params[0]}&order=${params[1]}`
+
+    return axios
+        .get(`https://nc-news-example-seminar-3-4.herokuapp.com/api/articles/?sort_by=${params[0]}&order=${params[1]}`)
         .then((response) => {
 
             return response.data;

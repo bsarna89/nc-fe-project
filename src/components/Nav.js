@@ -1,7 +1,13 @@
 import React from 'react';
+import { useContext } from "react";
 import { Link } from 'react-router-dom';
+import { userContext } from '../context/Context';
 
 const Nav = () => {
+
+    const user = useContext(userContext);
+    console.log(user);
+
     return (
         <div >
 
