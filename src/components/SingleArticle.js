@@ -15,7 +15,7 @@ const SingleArticle = () => {
 
     useEffect(() => {
         fetchArticleById(article_id).then(({ article }) => {
-            console.log(article);
+
             setArticleById(article);
             setLoading(false);
         }).catch((err) => {
