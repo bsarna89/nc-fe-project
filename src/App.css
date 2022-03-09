@@ -47,8 +47,9 @@ body {
 }
 
 .footer{
-  height: 50px;
+  height: 35px;
   width: 100%;
+  text-align:center;
   position: fixed;
   bottom: 0;
   background-color: powderblue;
@@ -105,6 +106,11 @@ body {
   list-style-type: none;
 
  
+}
+.user_img{
+
+  width: 100;
+  height: 120px;
 }
 
 

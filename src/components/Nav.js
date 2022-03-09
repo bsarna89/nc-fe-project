@@ -12,7 +12,10 @@ const Nav = () => {
         if (loggedInUser.username) {
             setUserDisplay(loggedInUser.username);
         }
-    }, [userDispaly, loggedInUser.username]);
+        else {
+            setUserDisplay("Log In");
+        }
+    }, [userDispaly, loggedInUser]);
 
     return (
         <div >
@@ -21,7 +24,7 @@ const Nav = () => {
                 <Link to="/">Home</Link>
                 <Link to="/topics/">Topics</Link>
                 <Link to="/articles/sort/:sortedby">Sort articles</Link>
-                <Link to="/logUser"> {userDispaly} </Link>
+                <Link to="/logUser"> Account: {userDispaly} </Link>
             </nav>
 
         </div>
