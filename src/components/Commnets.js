@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchComments } from '../utils/api';
+import { addComments, fetchComments } from '../utils/api';
 import ErrorComp from './ErrorComp';
 import Loader from './Loader';
 import { Link } from 'react-router-dom';
+import { userContext } from '../context/Context';
+
+
 const Commnets = () => {
 
     const { article_id } = useParams();
-    console.log(article_id, "commemts card")
+    const { loggedInUser } = useContext(userContext);
 
     const [comments, setComments] = useState([]);
+    const [defaultComment, setDefaultComment] = useState("");
 
     const [error, setError] = useState(null);
     const [isLoading, setLoading] = useState(true);
@@ -22,21 +26,49 @@ const Commnets = () => {
             setLoading(false);
             setError(err);
         })
-    }, [comments, article_id])
+    }, [article_id, defaultComment]);
+
+    const handleAddComment = (event) => {
+
+        event.preventDefault();
+        setComments(() => {
+            const commentsNew = [...comments];
+            commentsNew.push({ body: event.target[0].value, author: loggedInUser.username });
+            return commentsNew;
+        })
+
+        addComments({ username: loggedInUser.username, body: event.target[0].value, }, article_id).then((response) => {
+
+            setDefaultComment("");
+        }).catch((err) => {
+            setError({ err });
+        })
+
+    }
+
+    const handleChange = (event) => {
+        setDefaultComment(event.target.value);
+    }
 
     if (isLoading) return (<Loader> </Loader>);
-
     if (error) { return <ErrorComp message={error} />; }
+    if (!loggedInUser.username) {
+        return (
+            <div>
+                <p> You need to be logged to see comments</p>
+            </div>
+        );
+    }
 
     return (
         <div>
 
             <ul className='list'>
                 <Link to={`/articles/${article_id}`}> <button> Go back to article</button></Link>
-                {comments.map((comment) => {
+                {comments.map((comment, index) => {
                     return (
 
-                        <li key={comment.comment_id} className='article' >
+                        <li key={index} className='article' >
                             <p> {comment.author}</p>
                             <p> {comment.body}</p>
                         </li>
@@ -44,7 +76,13 @@ const Commnets = () => {
                     );
                 })}
 
-                <button> Add comment</button>
+                <li>
+                    <form onSubmit={handleAddComment}>
+                        <legend> Add your comment here </legend>
+                        <textarea onChange={handleChange} value={defaultComment || ""} id="text" name="text_form" rows="4" cols="30"></textarea>
+                        <button type="submit"> Add Comment </button>
+                    </form>
+                </li>
             </ul>
         </div>
     );

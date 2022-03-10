@@ -113,5 +113,8 @@ body {
   height: 120px;
 }
 
-
+.inputField{
+  height: 50px;
+  width: 100%;
+}
 
