@@ -12,10 +12,8 @@ const Commnets = () => {
     const { article_id } = useParams();
     const { loggedInUser } = useContext(userContext);
 
-
-    console.log(article_id, "commemts card")
-
     const [comments, setComments] = useState([]);
+    const [defaultComment, setDefaultComment] = useState("");
 
     const [error, setError] = useState(null);
     const [isLoading, setLoading] = useState(true);
@@ -28,13 +26,11 @@ const Commnets = () => {
             setLoading(false);
             setError(err);
         })
-    }, [article_id]);
+    }, [article_id, defaultComment]);
 
     const handleAddComment = (event) => {
 
         event.preventDefault();
-        console.log(event, "add commnet");
-        console.log(loggedInUser, "user");
         setComments(() => {
             const commentsNew = [...comments];
             commentsNew.push({ body: event.target[0].value, author: loggedInUser.username });
@@ -42,16 +38,27 @@ const Commnets = () => {
         })
 
         addComments({ username: loggedInUser.username, body: event.target[0].value, }, article_id).then((response) => {
-            console.log(response);
+
+            setDefaultComment("");
         }).catch((err) => {
             setError({ err });
         })
 
     }
 
-    if (isLoading) return (<Loader> </Loader>);
+    const handleChange = (event) => {
+        setDefaultComment(event.target.value);
+    }
 
+    if (isLoading) return (<Loader> </Loader>);
     if (error) { return <ErrorComp message={error} />; }
+    if (!loggedInUser.username) {
+        return (
+            <div>
+                <p> You need to be logged to see comments</p>
+            </div>
+        );
+    }
 
     return (
         <div>
@@ -72,7 +79,7 @@ const Commnets = () => {
                 <li>
                     <form onSubmit={handleAddComment}>
                         <legend> Add your comment here </legend>
-                        <textarea id="text" name="text_form" rows="4" cols="30"></textarea>
+                        <textarea onChange={handleChange} value={defaultComment || ""} id="text" name="text_form" rows="4" cols="30"></textarea>
                         <button type="submit"> Add Comment </button>
                     </form>
                 </li>
