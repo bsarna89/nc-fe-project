@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import { addComments, fetchComments } from '../utils/api';
+import { addComments, fetchComments, deleteComment } from '../utils/api';
 import ErrorComp from './ErrorComp';
 import Loader from './Loader';
 import { Link } from 'react-router-dom';
@@ -43,12 +43,30 @@ const Commnets = () => {
         }).catch((err) => {
             setError({ err });
         })
+    }
+
+    const handleDelete = (event) => {
+        event.preventDefault();
+        const id = event.target.value;
+        console.log(id, "params");
+
+
+        setComments(() => {
+            const commentsNew = comments.filter((comment) => { return comment.comment_id !== parseInt(id); })
+            return commentsNew;
+        })
+
+        deleteComment(id).then(() => { }).catch((err) => {
+            setError({ err });
+        })
 
     }
 
     const handleChange = (event) => {
         setDefaultComment(event.target.value);
     }
+
+
 
     if (isLoading) return (<Loader> </Loader>);
     if (error) { return <ErrorComp message={error} />; }
@@ -71,6 +89,9 @@ const Commnets = () => {
                         <li key={index} className='article' >
                             <p> {comment.author}</p>
                             <p> {comment.body}</p>
+                            {loggedInUser.username === comment.author &&
+                                <button value={comment.comment_id} onClick={handleDelete}> Delete comment</button>
+                            }
                         </li>
 
                     );
