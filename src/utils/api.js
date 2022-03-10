@@ -72,3 +72,15 @@ export function fetchComments(id) {
             return response.data;
         });
 }
+
+export function addComments(comment, id) {
+    console.log(comment, "api")
+    console.log(id, "api")
+
+    return axios
+        .post(`https://nc-news-b.herokuapp.com/api/articles/${id}/comments`, comment)
+        .then((response) => {
+            console.log(response.data);
+            return response.data;
+        });
+}
