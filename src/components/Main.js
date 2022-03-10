@@ -8,6 +8,7 @@ import SingleTopic from './SingleTopic';
 import SortedArticles from './SortedArticles';
 import Topics from './Topics';
 import ErrorComp from './ErrorComp';
+import Commnets from './Commnets';
 
 const Main = () => {
     return (
@@ -19,6 +20,7 @@ const Main = () => {
                 <Route path="/articles/topic/:params" element={<SingleTopic></SingleTopic>} ></Route>
                 <Route path="/articles/:article_id" element={<SingleArticle></SingleArticle>}></Route>
                 <Route path="/articles/sort/:sortedby" element={<SortedArticles></SortedArticles>}></Route>
+                <Route path="/article/comments/:article_id" element={<Commnets></Commnets>}></Route>
                 <Route path="/logUser" element={<LogUser></LogUser>} ></Route>
                 <Route path="*" element={<ErrorComp></ErrorComp>} />
 

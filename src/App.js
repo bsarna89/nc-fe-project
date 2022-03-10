@@ -12,7 +12,15 @@ import Nav from './components/Nav';
 
 function App() {
 
-  const [loggedInUser, setLoggedInUser] = useState();
+  const [loggedInUser, setLoggedInUser] = useState(
+    {
+      username: "MichaelOffice",
+      name: "Michael Scott",
+      avatar_url: "https://static1.cbrimages.com/wordpress/wp-content/uploads/2021/10/Michael-Scott-the-Office.jpg"
+    }
+  );
+
+
 
   return (
 
