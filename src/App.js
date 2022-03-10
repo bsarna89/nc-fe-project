@@ -13,12 +13,13 @@ import Nav from './components/Nav';
 function App() {
 
   const [loggedInUser, setLoggedInUser] = useState({});
+  const [userVoted, setUserVoted] = useState([{ username: "grumpy19", voted: "up" }]);
 
 
 
   return (
 
-    <userContext.Provider value={{ loggedInUser, setLoggedInUser }}>
+    <userContext.Provider value={{ loggedInUser, setLoggedInUser, userVoted, setUserVoted }}>
       <BrowserRouter>
         <div>
 
