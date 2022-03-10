@@ -80,3 +80,12 @@ export function addComments(comment, id) {
             return response.data;
         });
 }
+
+export function deleteComment(id) {
+
+    return axios
+        .delete(`https://nc-news-b.herokuapp.com/api/comments/${id}`)
+        .then((response) => {
+            return response.data;
+        });
+}
