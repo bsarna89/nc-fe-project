@@ -3,32 +3,28 @@ import { userContext } from '../context/Context';
 import { useParams } from 'react-router-dom';
 import Loader from './Loader';
 import ErrorComp from './ErrorComp';
-import { fetchArticleById } from '../utils/api';
+import { fetchArticleById, updateVotes } from '../utils/api';
 import { Link } from 'react-router-dom';
 
 const SingleArticle = () => {
 
     const { loggedInUser } = useContext(userContext);
-    const { userVoted } = useContext(userContext);
-    console.log(userVoted, "users voted");
 
     const { article_id } = useParams();
 
     const [article, setArticleById] = useState([]);
-    const [userLogged, setUserLogged] = useState(loggedInUser.username);
+    const [userLogged] = useState(loggedInUser.username);
 
+    const [votesIncrement, setVotesIncrement] = useState(0);
     const [votes, setVotes] = useState();
-    const [votesUpValid, setVotesUpValid] = useState(false);
-    const [votesDownValid, setVotesDownValid] = useState(false);
 
     const [isLoading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         fetchArticleById(article_id).then(({ article }) => {
-
-            setArticleById(article);
             setVotes(article.votes);
+            setArticleById(article);
             setLoading(false);
         }).catch((err) => {
 
@@ -38,20 +34,15 @@ const SingleArticle = () => {
 
     }, [article_id, userLogged]);
 
-    const handleVoteUp = (event) => {
+    const handleIncrement = (inc) => {
+        setVotesIncrement((votesIncrement) => { return votesIncrement + inc; })
+        setVotes(() => { const newVotes = votes + inc; return newVotes; })
 
-        setVotes(() => {
-            const newVotes = votes + 1;
-            return newVotes;
+
+        updateVotes(article_id, inc).catch(() => {
+            setVotesIncrement((votesIncrement) => { return votesIncrement - inc; })
+            setVotes((votes) => { return votes - inc; })
         })
-
-    }
-    const handleVoteDown = (event) => {
-        setVotes(() => {
-            const newVotes = votes - 1;
-            return newVotes;
-        })
-
     }
 
 
@@ -72,8 +63,8 @@ const SingleArticle = () => {
                         <Link to={`/article/comments/${article.article_id}`}> <button> See comments</button> </Link>
                         <div>
                             <p> Votes : {votes} </p>
-                            <button onClick={handleVoteUp}> Vote up  </button>
-                            <button onClick={handleVoteDown}> Vote down</button>
+                            <button disabled={votesIncrement > 0} onClick={() => { handleIncrement(1) }}> Vote up  </button>
+                            <button disabled={votesIncrement < 0 || votes === 0} onClick={() => { handleIncrement(-1) }}> Vote down</button>
                         </div>
                         <p></p>
                     </div>
