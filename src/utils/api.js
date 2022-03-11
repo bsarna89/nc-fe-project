@@ -89,3 +89,12 @@ export function deleteComment(id) {
             return response.data;
         });
 }
+
+export function updateVotes(id, inc) {
+    const votes = { inc_votes: inc }
+    return axios
+        .patch(`https://nc-news-b.herokuapp.com/api/articles/${id}`, votes)
+        .then((response) => {
+            return response.data;
+        });
+}
